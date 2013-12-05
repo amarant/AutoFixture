@@ -96,7 +96,6 @@
   <ItemGroup>
     <Compile Include="AutoPropertiesTarget.cs" />
     <Compile Include="BehaviorRoot.cs" />
-    <Compile Include="FreezeOnMatchCustomization.cs" />
     <Compile Include="Kernel\BaseTypeSpecification.cs" />
     <Compile Include="Kernel\IRecursionHandler.cs" />
     <Compile Include="Kernel\PropertyNameSpecification.cs" />
