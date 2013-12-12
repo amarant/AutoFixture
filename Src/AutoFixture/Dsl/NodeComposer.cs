@@ -419,7 +419,8 @@ namespace Ploeh.AutoFixture.Dsl
 
         public IMatchComposer<T> MatchBy()
         {
-            return null;
+            var container = (FilteringSpecimenBuilder)FindContainer(this);
+            return new MatchComposer<T>(container.Builder);
         }
 
         /// <summary>
@@ -446,7 +447,7 @@ namespace Ploeh.AutoFixture.Dsl
             return (NodeComposer<T>)this.ReplaceNodes(
                 with: n => n.Compose(new[] { factory }),
                 when: n => n is NoSpecimenOutputGuard);
-        }        
+        }
 
         private static IRequestSpecification CreateSpecification()
         {

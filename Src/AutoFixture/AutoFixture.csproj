@@ -97,6 +97,7 @@
     <Compile Include="AutoPropertiesTarget.cs" />
     <Compile Include="BehaviorRoot.cs" />
     <Compile Include="Dsl\IMatchComposer.cs" />
+    <Compile Include="Dsl\MatchComposer.cs" />
     <Compile Include="Kernel\FieldNameSpecification.cs" />
     <Compile Include="Kernel\ParameterNameSpecification.cs" />
     <Compile Include="Kernel\BaseTypeSpecification.cs" />
