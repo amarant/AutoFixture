@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ploeh.AutoFixture</RootNamespace>
     <AssemblyName>Ploeh.AutoFixture</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>
@@ -56,6 +56,7 @@
     <CodeAnalysisRules>
     </CodeAnalysisRules>
     <CodeAnalysisRuleSet>Migrated rules for AutoFixture.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -70,6 +71,7 @@
     <DocumentationFile>bin\Release\Ploeh.AutoFixture.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>AutoFixture.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Verify|AnyCPU' ">
     <OutputPath>bin\Verify\</OutputPath>
@@ -86,6 +88,7 @@
     <ErrorReport>prompt</ErrorReport>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>..\AutoFixture.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -117,25 +120,9 @@
     <Compile Include="CurrentDateTimeCustomization.cs" />
     <Compile Include="CurrentDateTimeGenerator.cs" />
     <Compile Include="CustomizationNode.cs" />
-    <Compile Include="DataAnnotations\Automaton.cs" />
-    <Compile Include="DataAnnotations\BasicAutomata.cs" />
-    <Compile Include="DataAnnotations\BasicOperations.cs" />
-    <Compile Include="DataAnnotations\LinkedListExtensions.cs" />
-    <Compile Include="DataAnnotations\ListEqualityComparer.cs" />
-    <Compile Include="DataAnnotations\MinimizationOperations.cs" />
     <Compile Include="DataAnnotations\RangeAttributeRelay.cs" />
-    <Compile Include="DataAnnotations\RegExp.cs" />
-    <Compile Include="DataAnnotations\RegExpMatchingOptions.cs" />
-    <Compile Include="DataAnnotations\RegExpSyntaxOptions.cs" />
     <Compile Include="DataAnnotations\RegularExpressionAttributeRelay.cs" />
-    <Compile Include="DataAnnotations\SpecialOperations.cs" />
-    <Compile Include="DataAnnotations\State.cs" />
-    <Compile Include="DataAnnotations\StateEqualityComparer.cs" />
-    <Compile Include="DataAnnotations\StatePair.cs" />
     <Compile Include="DataAnnotations\StringLengthAttributeRelay.cs" />
-    <Compile Include="DataAnnotations\Transition.cs" />
-    <Compile Include="DataAnnotations\TransitionComparer.cs" />
-    <Compile Include="DataAnnotations\Xeger.cs" />
     <Compile Include="DateTimeGenerator.cs" />
     <Compile Include="Dsl\NodeComposer.cs" />
     <Compile Include="EnumerableList.cs" />
@@ -327,6 +314,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Fare\Src\Fare\Fare.csproj">
+      <Project>{24033e0e-0304-4f06-94cd-6f6416eca509}</Project>
+      <Name>Fare</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Fare;
 using Ploeh.AutoFixture.DataAnnotations;
 using Ploeh.AutoFixture.Kernel;
 
