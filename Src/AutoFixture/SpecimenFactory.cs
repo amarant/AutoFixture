@@ -135,6 +135,26 @@ namespace Ploeh.AutoFixture
         /// </param>
         /// <param name="context">The context used to resolve the type request.</param>
         /// <returns>An anonymous object.</returns>
+        public static object Create(this ISpecimenContext context, Type type)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
+            return context.Resolve(type);
+        }
+
+        /// <summary>
+        /// Creates an anonymous object, potentially using the supplied seed as additional
+        /// information when creating the object.
+        /// </summary>
+        /// <typeparam name="T">The type of object to create.</typeparam>
+        /// <param name="seed">
+        /// Any data that adds additional information when creating the anonymous object.
+        /// </param>
+        /// <param name="context">The context used to resolve the type request.</param>
+        /// <returns>An anonymous object.</returns>
         /// <remarks>Obsolete: Please move over to using <see cref="Create{T}(Ploeh.AutoFixture.Kernel.ISpecimenContext)">Create{T}()</see> as this method will be removed in the next release</remarks>
         [Obsolete("Please move over to using Create<T>() as this method will be removed in the next release")]
         public static T CreateAnonymous<T>(this ISpecimenContext context, T seed)
@@ -479,7 +499,7 @@ namespace Ploeh.AutoFixture
                    select (T)s;
         }
 
-        internal static object Create(this ISpecimenBuilder composer, Type type)
+        public static object Create(this ISpecimenBuilder composer, Type type)
         {
             return composer.CreateContext().Resolve(type);
         }
