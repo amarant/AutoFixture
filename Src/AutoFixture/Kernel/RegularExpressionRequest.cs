@@ -16,6 +16,15 @@ namespace Ploeh.AutoFixture.Kernel
         /// <summary>
         /// Initializes a new instance of the <see cref="RegularExpressionRequest"/> class.
         /// </summary>
+        public RegularExpressionRequest()
+        {
+            _patterns = new List<string>();
+        }
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RegularExpressionRequest"/> class.
+        /// </summary>
         /// <param name="pattern">The pattern.</param>
         public RegularExpressionRequest(string pattern)
         {

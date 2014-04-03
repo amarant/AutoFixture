@@ -67,6 +67,47 @@ namespace Ploeh.AutoFixture.Dsl
         IPostprocessComposer<T> With<TProperty>(Expression<Func<T, TProperty>> propertyPicker, TProperty value);
 
         /// <summary>
+        /// Registers that a writable property or field should be assigned a specific value as
+        /// part of specimen post-processing.
+        /// </summary>
+        /// <typeparam name="TProperty">The type of the property of field.</typeparam>
+        /// <param name="propertyPicker">
+        /// An expression that identifies the property or field that will have
+        /// <paramref name="valueCreator"/> assigned.
+        /// </param>
+        /// <param name="valueCreator">
+        /// The value to assign to the property or field identified by
+        /// <paramref name="propertyPicker"/>.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IPostprocessComposer{T}"/> which can be used to further customize the
+        /// post-processing of created specimens.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "With", Justification = "Renaming would be a breaking change.")]
+        IPostprocessComposer<T> With<TProperty>(Expression<Func<T, TProperty>> propertyPicker, Func<TProperty> valueCreator);
+
+        /// <summary>
+        /// Registers that a writable property or field should be assigned a specific value as
+        /// part of specimen post-processing.
+        /// </summary>
+        /// <typeparam name="TProperty">The type of the property of field.</typeparam>
+        /// <param name="propertyPicker">
+        /// An expression that identifies the property or field that will have
+        /// <paramref name="valueCreator"/> assigned.
+        /// </param>
+        /// <param name="valueCreator">
+        /// The value creator to assign to the property or field identified by
+        /// <paramref name="propertyPicker"/>.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IPostprocessComposer{T}"/> which can be used to further customize the
+        /// post-processing of created specimens.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "With", Justification = "Renaming would be a breaking change.")]
+        IPostprocessComposer<T> With<TProperty>(Expression<Func<T, TProperty>> propertyPicker, Func<ISpecimenContext, TProperty> valueCreator);
+
+
+        /// <summary>
         /// Enables auto-properties for a type of specimen.
         /// </summary>
         /// <returns>

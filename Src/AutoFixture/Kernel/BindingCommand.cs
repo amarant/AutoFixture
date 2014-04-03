@@ -73,6 +73,31 @@ namespace Ploeh.AutoFixture.Kernel
         /// A function that creates a value that will be assigned to the property or field
         /// identified by <paramref name="propertyPicker"/>.
         /// </param>
+        public BindingCommand(Expression<Func<T, TProperty>> propertyPicker, Func<TProperty> valueCreator)
+        {
+            if (propertyPicker == null)
+            {
+                throw new ArgumentNullException("propertyPicker");
+            }
+            if (valueCreator == null)
+            {
+                throw new ArgumentNullException("valueCreator");
+            }
+
+            this.member = propertyPicker.GetWritableMember().Member;
+            this.createBindingValue = c => valueCreator();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BindingCommand{T, TProperty}"/> class with
+        /// the supplied property picker expression and a function that creates a value to be
+        /// assigned to that property or field.
+        /// </summary>
+        /// <param name="propertyPicker">An expression that identifies a property or field.</param>
+        /// <param name="valueCreator">
+        /// A function that creates a value that will be assigned to the property or field
+        /// identified by <paramref name="propertyPicker"/>.
+        /// </param>
         public BindingCommand(Expression<Func<T, TProperty>> propertyPicker, Func<ISpecimenContext, TProperty> valueCreator)
         {
             if (propertyPicker == null)

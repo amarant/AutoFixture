@@ -368,6 +368,109 @@ namespace Ploeh.AutoFixture.Dsl
         }
 
         /// <summary>
+        /// Registers that a writable property or field should be assigned a
+        /// specific value as part of specimen post-processing.
+        /// </summary>
+        /// <typeparam name="TProperty">
+        /// The type of the property of field.
+        /// </typeparam>
+        /// <param name="propertyPicker">
+        /// An expression that identifies the property or field that will have
+        /// <paramref name="value"/> assigned.
+        /// </param>
+        /// <param name="value">
+        /// The value to assign to the property or field identified by
+        /// <paramref name="propertyPicker"/>.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IPostprocessComposer{T}"/> which can be used to
+        /// further customize the post-processing of created specimens.
+        /// </returns>
+        public IPostprocessComposer<T> With<TProperty>(Expression<Func<T, TProperty>> propertyPicker, Func<TProperty> valueCreator)
+        {
+            var graphWithoutSeedIgnoringRelay =
+                this.WithoutSeedIgnoringRelay();
+
+            var container = FindContainer(graphWithoutSeedIgnoringRelay);
+
+            var graphWithProperty = graphWithoutSeedIgnoringRelay.ReplaceNodes(
+                with: n => n.Compose(
+                    new ISpecimenBuilder[]
+                    {
+                        new Postprocessor<T>(
+                            CompositeSpecimenBuilder.ComposeIfMultiple(n),
+                            new BindingCommand<T, TProperty>(propertyPicker, valueCreator),
+                            CreateSpecification()),
+                        new SeedIgnoringRelay()
+                    }),
+                when: container.Equals);
+
+            return (NodeComposer<T>)graphWithProperty.ReplaceNodes(
+                with: n => n.Compose(
+                    new[]
+                    {
+                        new Omitter(
+                            new EqualRequestSpecification(
+                                propertyPicker.GetWritableMember().Member,
+                                new MemberInfoEqualityComparer()))
+                    }
+                    .Concat(n)),
+                when: n => n is NodeComposer<T>);
+        }
+
+        /// <summary>
+        /// Registers that a writable property or field should be assigned a
+        /// specific value as part of specimen post-processing.
+        /// </summary>
+        /// <typeparam name="TProperty">
+        /// The type of the property of field.
+        /// </typeparam>
+        /// <param name="propertyPicker">
+        /// An expression that identifies the property or field that will have
+        /// <paramref name="valueCreator"/> assigned.
+        /// </param>
+        /// <param name="valueCreator">
+        /// The value creator to assign to the property or field identified by
+        /// <paramref name="propertyPicker"/>.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IPostprocessComposer{T}"/> which can be used to
+        /// further customize the post-processing of created specimens.
+        /// </returns>
+        public IPostprocessComposer<T> With<TProperty>(
+            Expression<Func<T, TProperty>> propertyPicker, Func<ISpecimenContext, TProperty> valueCreator)
+        {
+            var graphWithoutSeedIgnoringRelay =
+                this.WithoutSeedIgnoringRelay();
+
+            var container = FindContainer(graphWithoutSeedIgnoringRelay);
+
+            var graphWithProperty = graphWithoutSeedIgnoringRelay.ReplaceNodes(
+                with: n => n.Compose(
+                    new ISpecimenBuilder[]
+                    {
+                        new Postprocessor<T>(
+                            CompositeSpecimenBuilder.ComposeIfMultiple(n),
+                            new BindingCommand<T, TProperty>(propertyPicker, valueCreator),
+                            CreateSpecification()),
+                        new SeedIgnoringRelay()
+                    }),
+                when: container.Equals);
+
+            return (NodeComposer<T>)graphWithProperty.ReplaceNodes(
+                with: n => n.Compose(
+                    new[]
+                    {
+                        new Omitter(
+                            new EqualRequestSpecification(
+                                propertyPicker.GetWritableMember().Member,
+                                new MemberInfoEqualityComparer()))
+                    }
+                    .Concat(n)),
+                when: n => n is NodeComposer<T>);
+        }
+
+        /// <summary>
         /// Enables auto-properties for a type of specimen.
         /// </summary>
         /// <returns>
