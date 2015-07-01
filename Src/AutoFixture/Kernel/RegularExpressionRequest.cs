@@ -10,6 +10,7 @@ namespace Ploeh.AutoFixture.Kernel
     public class RegularExpressionRequest : IEquatable<RegularExpressionRequest>
     {
         private readonly IEnumerable<string> _patterns;
+        private readonly IEnumerable<string> _negativePatterns;
         private readonly int? minLength;
         private readonly int? maxLength;
 
@@ -43,7 +44,8 @@ namespace Ploeh.AutoFixture.Kernel
         /// <param name="minLength">The minimum length.</param>
         /// <param name="maxLength">The maximum length.</param>
         /// <exception cref="System.ArgumentNullException">pattern</exception>
-        public RegularExpressionRequest(IEnumerable<string> patterns, int? minLength, int? maxLength)
+        public RegularExpressionRequest(IEnumerable<string> patterns, int? minLength, int? maxLength,
+            Type type, IEnumerable<string> negativePatterns = null)
         {
             if (patterns == null)
             {
@@ -53,6 +55,8 @@ namespace Ploeh.AutoFixture.Kernel
             this._patterns = patterns;
             this.minLength = minLength;
             this.maxLength = maxLength;
+            this.PropertyType = type;
+            this._negativePatterns = negativePatterns;
         }
 
         /// <summary>
@@ -74,6 +78,17 @@ namespace Ploeh.AutoFixture.Kernel
             get
             {
                 return this._patterns;
+            }
+        }
+
+        /// <summary>
+        /// Gets the negative regular expression pattern.
+        /// </summary>
+        public IEnumerable<string> NegativePatterns
+        {
+            get
+            {
+                return this._negativePatterns;
             }
         }
 
@@ -104,6 +119,13 @@ namespace Ploeh.AutoFixture.Kernel
                 return maxLength;
             }
         }
+
+        public Type PropertyType
+        {
+            get; 
+            private set;
+        }
+
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> is equal to this instance.

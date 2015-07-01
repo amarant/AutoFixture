@@ -254,7 +254,15 @@ namespace Ploeh.AutoFixture.Kernel
             {
                 var propertyValue = context.Resolve(pi);
                 if (!(propertyValue is OmitSpecimen))
-                    pi.SetValue(specimen, propertyValue, null);
+                    try
+                    {
+                        pi.SetValue(specimen, propertyValue, null);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine();
+                        throw;
+                    }
             }
 
             foreach (var fi in this.GetFields(specimen))
